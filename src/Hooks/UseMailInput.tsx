@@ -1,4 +1,4 @@
-import React,{ useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const UseMailInput = () :[string, (e:string)=>void , boolean, boolean] =>{
 
@@ -7,24 +7,23 @@ const UseMailInput = () :[string, (e:string)=>void , boolean, boolean] =>{
   const [ isValid, setIsValid ] = useState<boolean>(false)
 
   useEffect(()=>{
-    let isItValid = isNewValueIsCorrect(value)
-    //traitement goes here
-    if( !isItValid ){
-      setIsError(true)
-      setIsValid(false)
-    } 
-    else{
-      setIsValid(true)
-      setIsError(false)
-    }
+    //traitement
+    if (checkMail()){ setIsValid(true);setIsError(false);}
+    else{ setIsValid(false); setIsError(true)}
+
+    //on no value we don't send error
+    if(value.length === 0) {setIsValid(false); setIsError(false)}
   },[value])
 
-  const isNewValueIsCorrect :(s :string)=>boolean = s =>{
-
+  const checkMail = () => {
+    const re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/gim
+    if (value.toLowerCase().match(re) === null) {
+      return false
+    }
     return true
   }
   
-  const onChange :( e: string )=>void = e => {if(e) setValue(e)}
+  const onChange :( e: string )=>void = e => {setValue(e)}
 
   
   return [ value, onChange, isError, isValid ]

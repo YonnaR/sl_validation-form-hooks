@@ -1,6 +1,6 @@
-import React,{ useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-const UseMoneyInput = ()  =>{
+const UseMoneyInput = () :[string, (s :string)=>void, boolean, boolean ] =>{
 
   const [ value , setValue ] = useState<string>('')
   const [ isError, setIsError ] = useState<boolean>(false)
